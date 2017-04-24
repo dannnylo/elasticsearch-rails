@@ -61,7 +61,7 @@ module Elasticsearch
           before_save do |i|
             changed_attr = i.__elasticsearch__.instance_variable_get(:@__changed_attributes) || {}
             i.__elasticsearch__.instance_variable_set(:@__changed_attributes,
-                                                      changed_attr.merge(Hash[ i.changes.map { |key, value| [key, value.last] } ]))
+                                                      changed_attr.merge(Hash[ (i.changes || {}).map { |key, value| [key, value.last] } ]))
           end if respond_to?(:before_save) && instance_methods.include?(:changed_attributes)
         end
       end
